@@ -61,9 +61,54 @@ HTMLWidgets.widget({
     newNode.append("title");
     newNode.append("circle")
         .style("fill", "#FFFFFF");
+    //newNode.append("text")
+     //   .attr("dy", ".3em")
+      //  .style("text-anchor", "middle");
+    
     newNode.append("text")
-        .attr("dy", ".3em")
-        .style("text-anchor", "middle");
+    .attr("x", function(d) {
+      return d.x;
+    })
+    .attr("y", function(d) {
+      return d.y + 5;
+    })
+    .attr("text-anchor", "middle")
+    .text(function(d) {
+      return d["Item"];
+    })
+    .style({
+      "fill": "white",
+      "font-family": "Verdana, san-serif",
+      "font-size": "12px"
+    })
+    .each(wrap);
+
+function wrap(d) {
+    var text = d3.select(this),
+      width = d.r * 2,
+      x = d.x,
+      y = d.y,
+      words = text.text().split(/\s+/).reverse(),
+      word,
+      line = [],
+      lineNumber = 0,
+      lineHeight = 1.1,
+      tspan = text.text(null).append("tspan").attr("x", x).attr("y", y);
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + "em").text(word);
+      }
+    }
+}
+    
+    
+    
+    
 
     // Remove old nodes
     node.exit().transition()
