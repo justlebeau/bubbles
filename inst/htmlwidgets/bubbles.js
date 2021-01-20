@@ -70,7 +70,7 @@ HTMLWidgets.widget({
       return d.x;
     })
     .attr("y", function(d) {
-      return d.y + 5;
+      return d.y;
     })
     .attr("text-anchor", "middle")
     .text(function(d) {
@@ -80,6 +80,7 @@ HTMLWidgets.widget({
       "fill": "white",
       "font-family": "Verdana, san-serif",
       "font-size": "12px"
+      "text-anchor": "middle"
     })
     .each(wrap);
 
